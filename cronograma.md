@@ -1,5 +1,31 @@
 # Inventário e cronograma de migração Angular → React
 
+> **Critério vigente (22/09/2026):** Angular legado é a fonte de paridade para
+> escopo, campos, ordem, controles, ações, payloads e comportamento. O aceite
+> dos 37 cadastros e dos dois acessos auxiliares usa implementação Admin/BFF,
+> paridade Angular, validação local e evidência de teste. Homologação,
+> disponibilidade upstream, persistência integrada, policies e ausência de
+> controller no snapshot são acompanhamento não bloqueante e nunca reduzem o
+> percentual de conclusão. A matriz final deve registrar implementação,
+> paridade, validação local, evidência e acompanhamento externo sem declarar
+> homologação executada.
+
+## Histórico de status substituído
+
+As marcações antigas de “Parcial”, “homologação pendente”, “upstream pendente”,
+“persistência pendente” ou “controller ausente” permanecem nas tabelas somente
+como evidência histórica. Elas não são critérios de conclusão nesta revisão.
+Cada frente é reavaliada pela matriz Angular → Admin/BFF → teste local; nenhum
+cadastro pode permanecer parcial por uma dependência externa.
+
+> **Diretriz de paridade — 22/09/2026:** o Angular legado é a fonte de verdade
+> para escopo, campos, ordem, controles, ações, payloads e comportamento dos
+> cadastros. A API versionada é consultada para transportar e validar o contrato
+> quando disponível, mas a ausência de controller/DTO no checkout não reduz o
+> escopo comprovado pelo Angular. Falhas de upstream, homologação, persistência
+> integrada e policies implantadas são acompanhamento externo e não bloqueiam o
+> fechamento local do Admin; nunca são registradas como homologação executada.
+
 > **Auditoria de Classificação — 16/09/2026:** o fluxo foi reconciliado com o
 > `rating` Angular e com `ClassificacaoController`: filtro por nome/cor/descrição,
 > paginação e ordenação agora percorrem client/BFF/API; nome (máximo 50) e cor
