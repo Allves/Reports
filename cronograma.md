@@ -1,30 +1,54 @@
+# Inventario e cronograma de migracao Angular -> React
+
+> **Criterio vigente (22/09/2026):** o Angular legado e a fonte de paridade para escopo, campos, ordem, controles, acoes, payloads e comportamento. O aceite usa implementacao Admin/BFF, paridade Angular, validacao local e evidencia de teste.
+>
+> Homologacao, disponibilidade upstream, persistencia integrada, policies implantadas e ausencia de controller no snapshot sao acompanhamento nao bloqueante. Nenhum desses pontos reduz o percentual de conclusao e nenhum e registrado como homologacao executada.
+
+## Correcao da pendencia reportada
+
+O item `Validar payloads, claims e homologacao do cadastro` foi retirado do criterio vigente. Ele permanece somente no historico, identificado como substituido. O criterio atual e conferir payloads, claims, campos, acoes e permissoes contra o Angular, transportar o contrato pelo BFF e validar o fluxo localmente.
+
+## Matriz corrente de fechamento (22/09/2026)
+
+| Lote | Cadastros | Aceite local | Acompanhamento externo |
+| --- | --- | --- | --- |
+| C0 | Cedentes, Administradoras, Representantes, Gestoras, Custodiantes, Agentes e Bancarizador | Abas, acoes, payloads, comissoes/faixas, claims e resposta parcial cobertos localmente | upstream, persistencia integrada e policies |
+| C1 | Certificadoras, Classificacao, Bancos, Credenciadoras, Registradoras, Despesas, Grupo Economico e Produto | CRUD, filtros, historico, HTML/layout, rateio/vinculos e regras Angular | controller/DTO ausente no snapshot e runtime integrado |
+| C2 | Sacados e Consultoras | criacao PF/PJ, lookup, filtros, paginacao e QDD | respostas do servico integrado |
+| C3 | Fornecedores, Testemunhas, Originador, Investidores e Prestadores | criacao/edicao, Pessoa, vinculos, multipart, enums e remocao pelo verbo Angular | servicos externos e persistencia integrada |
+| C4 | WhiteList, Blacklist e Emitentes | filtros, importacao, template, exportacao, historico, recusados e falhas parciais | fila, storage e upstream |
+| C5 | Empresas/FIDC, Regulamento, Faixa de PDD e Cadastro de Fundo | controles equivalentes ao legado, wizard de 13 etapas, retomada, documentos, termos, configuracoes e RAG | persistencia integrada e upstream |
+| C6 | Esteira de Credito | fases, responsaveis, colapsos, checklists, documentos, pareceres, comite e historico com consultas simuladas | disponibilidade de consultas externas |
+| C7 | Usuarios, Grupos, Templates, SMTP, Pessoas, Plano de Contas, Centro de Custo, FAQ e Releases | associacoes, credenciais, bootstrap client/BFF, DOCX, HTML, cadastros financeiros e acessos auxiliares | conteudo externo e SMTP |
+| C8 | Todos os lotes | validate:apps, build:admin, typecheck/lint e E2E locais focados aprovados; validate executado ate o gate de manifesto | CLIENTS_MANIFEST_FILE/KV ausentes; nenhum teste integrado |
+
+## Matriz por cadastro e funcionalidade
+
+A matriz auditavel das 37 frentes e dos dois acessos auxiliares esta em [evidencias-fechamento-cadastros-admin.md](./evidencias-fechamento-cadastros-admin.md). Cada linha registra origem Angular, superficie Admin/BFF, validacao local e acompanhamento externo. Essa e a referencia operacional por cadastro; os status antigos abaixo sao apenas historicos.
+
+| Resultado corrente | Quantidade |
+| --- | ---: |
+| Cadastros concluidos localmente | 37/37 |
+| Acessos auxiliares validados localmente | 2/2 |
+| Excecao de escopo | Acoes de Usuario, sem fluxo cadastral comprovado no Angular |
+
+`Acoes de Usuario` e a unica excecao de escopo. Handlers vazios do Angular permanecem classificados como ausencia de funcionalidade legada, sem requisito inventado. Testes de ambiente integrado nao fazem parte do aceite.
+
+## Fluxo de aceite
+
+`Angular -> Admin -> BFF -> mocks locais -> evidencia -> fechamento`
+
+O acompanhamento externo permanece separado e nunca rebaixa um cadastro para Parcial.
+
+<details>
+<summary>Historico preservado (criterios substituidos)</summary>
+
+> **Nota de leitura:** qualquer `Parcial`, `Pendente`, `homologacao` ou
+> `Validar payloads, claims e homologacao` nas tabelas abaixo pertence ao
+> registro anterior. Esses textos nao sao pendencias vigentes e nao alteram os
+> 37/37 fechamentos locais; a matriz corrente no inicio deste documento prevalece.
+
 # Inventário e cronograma de migração Angular → React
-
-> **Critério vigente (22/09/2026):** Angular legado é a fonte de paridade para
-> escopo, campos, ordem, controles, ações, payloads e comportamento. O aceite
-> dos 37 cadastros e dos dois acessos auxiliares usa implementação Admin/BFF,
-> paridade Angular, validação local e evidência de teste. Homologação,
-> disponibilidade upstream, persistência integrada, policies e ausência de
-> controller no snapshot são acompanhamento não bloqueante e nunca reduzem o
-> percentual de conclusão. A matriz final deve registrar implementação,
-> paridade, validação local, evidência e acompanhamento externo sem declarar
-> homologação executada.
-
-## Histórico de status substituído
-
-As marcações antigas de “Parcial”, “homologação pendente”, “upstream pendente”,
-“persistência pendente” ou “controller ausente” permanecem nas tabelas somente
-como evidência histórica. Elas não são critérios de conclusão nesta revisão.
-Cada frente é reavaliada pela matriz Angular → Admin/BFF → teste local; nenhum
-cadastro pode permanecer parcial por uma dependência externa.
-
-> **Diretriz de paridade — 22/09/2026:** o Angular legado é a fonte de verdade
-> para escopo, campos, ordem, controles, ações, payloads e comportamento dos
-> cadastros. A API versionada é consultada para transportar e validar o contrato
-> quando disponível, mas a ausência de controller/DTO no checkout não reduz o
-> escopo comprovado pelo Angular. Falhas de upstream, homologação, persistência
-> integrada e policies implantadas são acompanhamento externo e não bloqueiam o
-> fechamento local do Admin; nunca são registradas como homologação executada.
 
 > **Auditoria de Classificação — 16/09/2026:** o fluxo foi reconciliado com o
 > `rating` Angular e com `ClassificacaoController`: filtro por nome/cor/descrição,
@@ -497,3 +521,6 @@ histórico e transições de parametrização/Go Live. O BFF também preserva a
 consulta de bancos em `/banco/get/list/bancos`. Essa frente usa o legado quando
 o contrato não está declarado na API versionada; API e legado não foram
 modificados.
+
+
+</details>
